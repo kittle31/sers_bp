@@ -12,7 +12,7 @@ const width = 500
 
 let loginStyle = {
   backgroundColor: 'white',
-  boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.2)',
+  boxShadow: '6px 6px 4px 2px #5C7080',
   position: 'fixed',
   left: '50%',
   top: '40px',
@@ -22,6 +22,7 @@ let loginStyle = {
   padding: 55,
   boxSizing: 'border-box',
   borderRadius: '10px',
+  border: '1px solid #5C7080'
 }
 
 let rowStyle = {
@@ -74,14 +75,14 @@ class AuthPage extends React.Component {
 
         const pwType = this.state.showPassword ?  "input" : "password"
         return (
-<div style={{display: 'flex', flexDirection: 'row'}}>
+        <div style={{display: 'flex', flexDirection: 'row'}}>
           {this.props.enablePicker && makePicker(this, colors, 'tmpColor')}
           <div style={styleToUse}>
             <div style={{display: 'flex', flexDirection: 'column'}}>
               <div style={rowStyle}>
                 <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
                   <div style={{fontSize: '40px', fontWeight: 'bold'}}>SERS</div>
-                  <div className={"bp3-text-small bp3-text-muted"}>SAFE Electronic Records System</div>
+                  <div className={"bp3-text-small"}>SAFE Electronic Records System</div>
                 </div>
                 <h2>Login</h2>
               </div>
@@ -106,7 +107,7 @@ class AuthPage extends React.Component {
               </div>
             </div>
           </div>
-</div>          
+        </div>          
         );
     }
 }

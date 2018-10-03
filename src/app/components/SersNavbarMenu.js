@@ -39,14 +39,12 @@ export class SersNavMenu extends React.Component {
         const subMenu = this.getSubmenu(menuItem.items, buttonIdx + " " + menuIdx)
         return (
           <Menu.Item key={buttonIdx + " " + menuIdx} text={menuItem.text}                     
-                     style={{ backgroundColor: this.props.buttonColor}}
                      onClick={this.handleClick.bind(this, menuItem)}>
             {subMenu}
           </Menu.Item>)
       }
       else
         return (<Menu.Item key={buttonIdx + " " + menuIdx} text={menuItem.text} active={false}
-                           style={{ backgroundColor: this.props.buttonColor}}
                            onClick={this.handleClick.bind(this, menuItem)} />)
     })
     return menuItems
@@ -57,7 +55,7 @@ export class SersNavMenu extends React.Component {
       const button = <Button text={item.text} url={item.url} key={buttonIdx} onClick={this.handleClick.bind(this, item)} style={{ backgroundColor: this.props.buttonColor}}/>
       if (item.items) {
         const menuItems = this.getSubmenu(item.items, buttonIdx)
-        const menu = (<Menu style={{ backgroundColor: this.props.buttonColor}}>
+        const menu = (<Menu>
           <Menu.Item disabled={true} />
           {menuItems}
         </Menu>)
@@ -135,7 +133,7 @@ getBreadCrumList(){
           </NavbarGroup>
           <NavbarGroup>
             <NavbarDivider />
-            <Button className={Classes.MINIMAL} style={{ paddingTop: 8 }} icon="home" text="Home" onClick={this.goHome.bind(this)} />
+            <Button className={Classes.MINIMAL} icon="home" text="Home" onClick={this.goHome.bind(this)} />
           </NavbarGroup>
           <NavbarGroup>
             {this.getMenu()}

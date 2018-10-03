@@ -37,7 +37,7 @@ class ResidentPage extends React.Component {
     handleEditResident(resident,  event){
       if (resident != this.props.selected)
         getGlobalStore().dispatch({type: types.RESIDENT_SELECTED, payload: resident})
-      const residentEdit = getGlobalStore().getState().homepage.residentMenu.items[1]      
+      const residentEdit = getGlobalStore().getState().homepage.residentMenu.items[1]
       getGlobalStore().dispatch({type: types.MENU_SELECTED, payload: residentEdit})
     }
 
@@ -49,13 +49,14 @@ class ResidentPage extends React.Component {
       return filtered.map( (res, i) => {
           const cls = (res == this.props.selected) ? "resident-row-selected" : "resident-row"
           return (<div key={i} className={cls} style={{display: 'flex', flexDirection: 'row', padding: 3}}
+                      onClick={this.handleResidentClick.bind(this, res)}
                        >
             <Tooltip content="Edit">
               <Icon icon="edit"
                     onClick={this.handleEditResident.bind(this, res)}
               />
             </Tooltip>
-            <div style={{display: 'flex', flexDirection: 'row'}} onClick={this.handleResidentClick.bind(this, res)}>
+            <div style={{display: 'flex', flexDirection: 'row'}}>
               <div style={{paddingLeft: 10}}>{res.firstName}</div>
               &nbsp;
               <div>{res.lastName}</div>
@@ -64,20 +65,21 @@ class ResidentPage extends React.Component {
       })
     }
 
-    getField(value, title){      
+    getField(value, title, width){
+      const w = width || 200
       return (
-        <div style={{height: 60, width: 200, padding: 10, margin: 5, border: '1px solid grey'}}>
+        <div style={{height: 60, width: w, padding: 10, margin: 5}}>
           <label className="bp3-text-muted">{title}</label>
-          <div>{value}</div>
+          <h5 className="bp3-heading">{value}</h5>
         </div>
       )
     }
 
-    getDateField(value, title){
+    getDateField(value, title, width){
       if (!value)
         return this.getField("", title)
       const date = moment().year(value.year).dayOfYear(value.dayOfYear)
-      return this.getField(date.format("MMM D, YYYY"), title)
+      return this.getField(date.format("MMM D, YYYY"), title, width)
     }
 
     getPhoneField(value, title){
@@ -88,11 +90,11 @@ class ResidentPage extends React.Component {
     }
 
     getEditButton(){
-      if (!this.props.selected.oop)
+      if (!this.props.selected)
       return null
 
       return (
-        <Button style={{height: 50}} 
+        <Button style={{height: 50}}
                 onClick={this.handleEditResident.bind(this, this.props.selected)}
         intent="primary" >Edit</Button>
       )
@@ -100,6 +102,7 @@ class ResidentPage extends React.Component {
 
     render() {
         const cardStyle={margin: 10}
+        const selected = this.props.selected || {}
         return (
           <div style={{paddingTop: 40}}>
             <SersNavbarMenu/>
@@ -117,31 +120,31 @@ class ResidentPage extends React.Component {
               </div>
               <SpacerSide size={30}/>
               <div style={{display: 'flex', flexDirection: 'column', }}>
-                  {this.getField(this.props.selected.firstName, "First Name")}
-                  {this.getField(this.props.selected.referredBy, "Reffered By")}
-                  {this.getPhoneField(this.props.selected.homePhone, "Home Phone")}
-                  {this.getPhoneField(this.props.selected.emContact, "Emergency Contact")}
-                  {this.getDateField(this.props.selected.birthdate, "DOB")}
-                  {this.getField(this.props.selected.allergy, "Allergy")}
+                  {this.getField(selected.firstName, "First Name")}
+                  {this.getField(selected.referredBy, "Reffered By")}
+                  {this.getPhoneField(selected.homePhone, "Home Phone")}
+                  {this.getPhoneField(selected.emContact, "Emergency Contact")}
+                  {this.getDateField(selected.birthdate, "DOB")}
+                  {this.getField(selected.allergy, "Allergy")}
               </div>
               <SpacerSide size={15}/>
               <div style={{display: 'flex', flexDirection: 'column', }}>
                   <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                    {this.getField(this.props.selected.lastName, "Last Name")}
-                    {this.getEditButton()}                    
+                    {this.getField(selected.lastName, "Last Name")}
+                    {this.getEditButton()}
                   </div>
-                  {this.getPhoneField(this.props.selected.referredPhone, "Reffered Phone")}
+                  {this.getPhoneField(selected.referredPhone, "Reffered Phone")}
                   <SpacerUp size={20}/>
                   <div style={{display: 'flex', flexDirection: 'row'}}>
-                    {this.getDateField(this.props.selected.startDate, "Start Date")}
-                    {this.getDateField(this.props.selected.exitDate, "Exit Date")}
+                    {this.getDateField(selected.startDate, "Start Date", 150)}
+                    {this.getDateField(selected.exitDate, "Exit Date", 150)}
                   </div>
                   <SpacerUp size={20}/>
                   <div style={{display: 'flex', flexDirection: 'row'}}>
-                    {this.getPhoneField(this.props.selected.cellPhone, "Cell Phone")}
-                    {this.getPhoneField(this.props.selected.messagePhone, "Message Phone")}
+                    {this.getPhoneField(selected.cellPhone, "Cell Phone", 150)}
+                    {this.getPhoneField(selected.messagePhone, "Message Phone", 150)}
                   </div>
-                  {this.getPhoneField(this.props.selected.emContactPhone, "Emergency Phone")}
+                  {this.getPhoneField(selected.emContactPhone, "Emergency Phone")}
               </div>
             </div>
           </div>

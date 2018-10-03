@@ -21,6 +21,7 @@ class App extends React.Component {
                     <Route path="/login" component={AuthPage} />
                     <Route exact path="/residents" component={ResidentPage} />
                     <Route exact path="/residents/edit" component={ResidentEditor} />
+                    <Route exact path="/residents/new" component={ResidentEditor} />
                     <Route exact path="/accountability" component={AccountabilityPage} />
                     <Route exact path="/reminders" component={RemindersPage} />
 

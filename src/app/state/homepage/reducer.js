@@ -5,7 +5,7 @@ let initialState = {
     residentMenu: {
       text: 'Residents', url: '/residents',
       items: [
-        { text: 'New Resident' },
+        { text: 'New Resident', url: '/residents/new' },
         { text: 'Edit', url: '/residents/edit'},
         {
           text: 'Counsel Notes',
@@ -53,10 +53,10 @@ let initialState = {
       },
     selectedMenu: null,
     nextMenu: null,
-    menuColor: colors.greenLight2,
-    buttonColor: colors.white,
-    tmpColor:  "#EAC87D",
-    enablePicker: true
+    menuColor: colors.greenLight3,
+    buttonColor: colors.greenLight1,
+    tmpColor:  colors.greenLight3,
+    enablePicker: false
 }
 initialState.menu.items.push(initialState.residentMenu)
 initialState.menu.items.push(initialState.accountabilityMenu)
@@ -77,9 +77,9 @@ export default function reducer(state = initialState, action) {
       }
       case types.MENU_HOME: {
         return {
-          ...state,          
+          ...state,
           selectedMenu: initialState.menu
-        }  
+        }
       }
       case types.SET_COLOR:{
         return {
@@ -98,4 +98,4 @@ export default function reducer(state = initialState, action) {
         return state
     }
   }
-  
+

@@ -16,7 +16,7 @@ export const makePicker = (self, cols, prop) => {
                        onClick={ () => {
                          getGlobalStore().dispatch({
                            type: types.SET_COLOR, payload: prop, color: cols[key]
-                         })                         
+                         })
                         }}/>
     })
     return (
@@ -33,6 +33,9 @@ function daysIntoYear(date){
 export const momentToGs  =(aMoment) => {
   if (!aMoment)
     return null
+
+  if (aMoment.dayOfYear)// already GS date
+    return aMoment
 
   let gs = {
     year: aMoment.getFullYear(),

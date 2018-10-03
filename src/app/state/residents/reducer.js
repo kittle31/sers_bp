@@ -2,20 +2,19 @@ import * as types from '../actionTypes'
 
 const initialState = {
     data: [],
-    selected: {},
+    selected: null,
     fullResident: {}
 }
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case types.RESIDENTS_LOADED: {      
+    case types.RESIDENTS_LOADED: {
       return {
         ...state,
-        data: action.payload,
-        selected: initialState.selected
+        data: action.payload
       }
     }
-    case types.RESIDENT_LOADED: {      
+    case types.RESIDENT_LOADED: {
       return {
         ...state,
         fullResident: action.payload
