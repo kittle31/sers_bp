@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
-import {InputGroup, Icon, Tooltip, Button} from "@blueprintjs/core"
+import {InputGroup, Icon, Tooltip, Button, Switch} from "@blueprintjs/core"
 import moment from 'moment'
 
 import * as types from '../state/actionTypes'
@@ -14,16 +14,21 @@ class ResidentPage extends React.Component {
     constructor(){
       super()
       this.state = {
-        filter: ''
+        filter: '',
+        includeInactive: false
       }
+    }
+
+    handleFilter = (event) => {
+      this.setState({filter: event.target.value})
+    }
+
+    handleInactiveToggle = (event) => {
+      this.setState({includeInactive: !this.state.includeInactive})
     }
 
     componentDidMount(){
         this.props.loadResidents()
-    }
-
-    handleFilter(event){
-      this.setState({filter: event.target.value})
     }
 
     handleResidentClick(resident, event){
@@ -110,9 +115,12 @@ class ResidentPage extends React.Component {
               <div style={{border: '1px solid black', width: 250, padding: 5, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                 <div style={{fontWeight: 'bold', paddingTop: 5, paddingBottom: 5}}>Search</div>
                 <InputGroup type="search" style={{width: '100%', margin: 5}} value={this.state.filter} placeholder="Search"
-                       onChange={this.handleFilter.bind(this)}
+                       onChange={this.handleFilter}
                 />
-                <div style={{paddingTop: 5, paddingBottom: 5}}> <input type="checkbox"/> Include Inactive Residents</div>
+                <div style={{paddingTop: 5, paddingBottom: 5}}>
+                  <Switch checked = {this.state.includeInactive} onChange={this.handleInactiveToggle}
+                          label={"Include Inactive Residents"}/>
+                </div>
                 <div style={{display: 'flex', flexDirection: 'column', paddingTop: 10, width: '100%', borderTop: '2px solid'}}>
                   <div style={{fontWeight: 'bold'}}>Resident List</div>
                   {this.getResidentData()}

@@ -1,7 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 
-import {InputGroup, NumericInput} from "@blueprintjs/core"
+import {InputGroup, Switch, Checkbox} from "@blueprintjs/core"
 import {DateInput} from "@blueprintjs/datetime"
 
 function momentFromGs(date){
@@ -21,7 +21,7 @@ function getMomentFormatter() {
 
 export const makeTextInput = (self, state, field, label, width) =>{
   return (
-    <div style={{padding: 5, width: 250, display: 'flex', flexDirection: 'column', width: width}}>
+    <div style={{padding: 5, display: 'flex', flexDirection: 'column', width: width}}>
       <label style={{paddingLeft: 5}}>{label}</label>
       <InputGroup value={state[field] || ''} placeholder={label}
               onChange={self.handleValueChanged.bind(self, field)}
@@ -39,7 +39,7 @@ export const makeDateInput = (self, state, field, label) => {
     date = dateValue
 
   return(
-    <div style={{padding: 5, display: 'flex', flexDirection: 'column', width: '100%'}}>
+    <div style={{padding: 5, display: 'flex', flexDirection: 'column'}}>
       <label style={{paddingLeft: 5}}>{label}</label>
       <DateInput value={date } placeholder={label}
                large={true}
@@ -47,5 +47,22 @@ export const makeDateInput = (self, state, field, label) => {
                onChange={self.handleDateChanged.bind(self, field)}
       {...getMomentFormatter()} />
     </div>
+  )
+}
+
+export const handleCheckbox = (self, field, event) => {
+  //convert to boolean
+  const evt = {target: {value: event.target.checked}}
+  self.handleValueChanged(field, evt )
+}
+
+export const makeCheckboxInput = (self, state, field, label) => {
+  const value = state[field]
+  if (value == undefined)
+     return null
+
+  return (
+    <Switch style={{paddingLeft: 50}} checked = {value} onChange={handleCheckbox.bind(this, self, field)}
+              label={label}/>
   )
 }

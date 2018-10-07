@@ -1,33 +1,28 @@
-import React from 'react';
+import React from 'react'
 
-import { makeTextInput } from '../util/UIUtil';
+import { makeTextInput } from '../util/UIUtil'
 
 export default class AddressEditor extends React.Component {
-  constructor(props){
-    super(props)
-    let value
-    if (props.state && props.field)
-       value = props.state[props.field]
-    if (!value){
+  constructor(){
+    super()
       this.state = {
         addressLine1: '',
         city: '',
         st: 'WA',
         zipCode: ''
         }
-    }
-    else
-    this.state = {
-      ...value,
+  }
+
+  componentWillReceiveProps(newProps){
+    let value
+    if (newProps.state && newProps.field)
+       value = newProps.state[newProps.field]
+    this.setState({
       addressLine1: value.addressLine1 || '',
       city: value.city || '',
       st: value.st || 'WA',
       zipCode: value.zipCode || ''
-    }
-  }
-
-  componentWillReceiveProps(newProps){
-    this.setState({})
+    })
   }
 
   handleValueChanged(field, event){

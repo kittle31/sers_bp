@@ -2,8 +2,8 @@ import React from 'react'
 import {NumericInput} from "@blueprintjs/core"
 
 export default class PhoneEditor extends React.Component{
-  constructor(props){
-    super(props)
+  constructor(){
+    super()
     this.state = {
       areaCode: 360,
       prefix: 0,

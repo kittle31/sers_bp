@@ -2,7 +2,7 @@ import React from "react"
 import moment from 'moment'
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
-import {Button} from "@blueprintjs/core"
+import {Button, Intent} from "@blueprintjs/core"
 
 import SersNavbarMenu from './SersNavbarMenu'
 import PhoneEditor from './PhoneEditor'
@@ -10,7 +10,9 @@ import AddressEditor from './AddressEditor'
 import { getGlobalStore } from "../state/globalStore"
 import * as types from "../state/actionTypes"
 import {getResident, saveResident, newResident, saveNewResident} from "../state/residents/actions"
-import {makeTextInput, makeDateInput} from "../util/UIUtil"
+import {makeTextInput, makeDateInput, makeCheckboxInput} from "../util/UIUtil"
+import {AppToaster} from "../util/toaster"
+import { SpacerSide } from "../util/spacer";
 
 class ResidentEditor extends React.Component {
     constructor(){
@@ -32,16 +34,18 @@ class ResidentEditor extends React.Component {
           const menu = getGlobalStore().getState().homepage.selectedMenu
           this.gotoResidentPage()
           getGlobalStore().dispatch({type: types.MENU_NEXT, payload: menu})
+          AppToaster.show({message: 'Select a Resident to edit', intent: Intent.PRIMARY, timeout: 0 })
       }
     }
     if (this.props.match.url == '/residents/new'){
-       this.props.newResident()
     }
+       this.props.newResident()
   }
 
   componentDidMount(){
     if (this.props.selected && this.props.selected.oop){
         this.props.getResident(this.props.selected.oop)
+        AppToaster.clear()
     }
   }
 
@@ -92,20 +96,24 @@ class ResidentEditor extends React.Component {
         </div>
         <div style={{display: 'flex', flexDirection: 'row'}}>
           <div style={{display: 'flex', flexDirection: 'column'}}>
-            {makeTextInput(this, sel, "firstName", "First Name")}
-            {makeTextInput(this, sel,  "referredBy", "Reffered By")}
+            {makeTextInput(this, sel, "firstName", "First Name", 250)}
+            {makeTextInput(this, sel, "referredBy", "Reffered By")}
             <PhoneEditor self={this} state={sel} field={'homePhone'} label="Home Phone"/>
-            {makeTextInput(this, sel,  "emContact", "Emergency Contact")}
+            {makeTextInput(this, sel, "emContact", "Emergency Contact")}
             {makeDateInput(this, sel, "birthdate", "DOB")}
-            {makeTextInput(this, sel,  "allergy", "Allergy")}
+            {makeTextInput(this, sel, "allergy", "Allergy")}
             {makeTextInput(this, sel, "ssn", "Ssn")}
         </div>
+        <SpacerSide size={15}/>
         <div style={{display: 'flex', flexDirection: 'column'}}>
-            {makeTextInput(this, sel, "lastName", "Last Name", 300)}
+            {makeTextInput(this, sel, "lastName", "Last Name", 250)}
             <PhoneEditor self={this} state={sel} field={'referredPhone'} label="Referred Phone"/>
             <div style={{display: 'flex', flexDirection: 'row'}}>
               {makeDateInput(this, sel,  "startDate", "Start Date")}
-              {makeDateInput(this, sel,  "exitDate", "Exit Date")}
+              <div style={{display: 'flex', flexDirection: 'column'}}>
+                {makeDateInput(this, sel,  "exitDate", "Exit Date")}
+                {makeCheckboxInput(this, sel,  "active", "Active")}
+              </div>
             </div>
             <div style={{display: 'flex', flexDirection: 'row'}}>
               <PhoneEditor self={this} state={sel} field={'cellPhone'} label="Cell Phone"/>
