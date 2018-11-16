@@ -5,7 +5,7 @@ import {applyMiddleware, createStore} from 'redux'
 import thunk from "redux-thunk"
 
 import {getGlobalStore, setGlobalStore} from "./state/globalStore"
-import App from "./App.js";
+import App from "./App.js"
 import reducer from "./state/combinedReducers"
 
 setGlobalStore(createStore(reducer, applyMiddleware(thunk)))

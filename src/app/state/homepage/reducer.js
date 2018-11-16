@@ -35,7 +35,7 @@ let initialState = {
             { text: 'Year to date' }
           ]
         },
-        { text: 'Daily Happenings' },
+        { text: 'Daily Happenings', url: '/accountability/happenings'}
       ]
     },
     remindersMenu: {

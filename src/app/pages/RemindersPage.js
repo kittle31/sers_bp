@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
 
-import SersNavbarMenu from './SersNavbarMenu'
+import SersNavbarMenu from '../components/SersNavbarMenu'
 
 const menuItems = [
 { text: 'Return',url: '/'},
@@ -13,7 +13,7 @@ class RemindersPage extends React.Component {
 
     render() {
         return (
-          <div style={{paddingTop: 40}}>
+          <div style={{paddingTop: 48}}>
             <SersNavbarMenu  />
             <p> the reminders page</p>
           </div>

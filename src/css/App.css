@@ -2,6 +2,10 @@
 @import "~@blueprintjs/icons/lib/css/blueprint-icons.css";
 @import "~@blueprintjs/datetime/lib/css/blueprint-datetime.css";
 
+body {
+  margin: 0;
+}
+
 .App {
   margin: 1rem;
   font-family: Arial, Helvetica, sans-serif;

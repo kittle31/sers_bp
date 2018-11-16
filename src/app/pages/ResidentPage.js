@@ -5,10 +5,10 @@ import {InputGroup, Icon, Tooltip, Button, Switch} from "@blueprintjs/core"
 import moment from 'moment'
 
 import * as types from '../state/actionTypes'
-import SersNavbarMenu from './SersNavbarMenu'
+import SersNavbarMenu from '../components/SersNavbarMenu'
 import { getGlobalStore } from '../state/globalStore'
 import { loadResidents } from '../state/residents/actions'
-import { SpacerSide, SpacerUp } from '../util/spacer';
+import { SpacerSide, SpacerUp } from '../util/spacer'
 
 class ResidentPage extends React.Component {
     constructor(){
@@ -49,6 +49,8 @@ class ResidentPage extends React.Component {
     getResidentData(){
       const filter = this.state.filter.toLowerCase()
       const filtered = this.props.residents.filter( (res) => {
+        if (!res.active && !this.state.includeInactive)
+           return false
         return res.firstName.toLowerCase().indexOf(filter) >=0 || res.lastName.toLowerCase().indexOf(filter) >=0
       })
       return filtered.map( (res, i) => {
@@ -83,7 +85,7 @@ class ResidentPage extends React.Component {
     getDateField(value, title, width){
       if (!value)
         return this.getField("", title)
-      const date = moment().year(value.year).dayOfYear(value.dayOfYear)
+      const date = moment(value, 'MM-DD-YYYY')
       return this.getField(date.format("MMM D, YYYY"), title, width)
     }
 
@@ -109,10 +111,10 @@ class ResidentPage extends React.Component {
         const cardStyle={margin: 10}
         const selected = this.props.selected || {}
         return (
-          <div style={{paddingTop: 40}}>
+          <div style={{paddingTop: 48}}>
             <SersNavbarMenu/>
             <div style={{display: 'flex', flexDirection: 'row'}} className="bp3-text-large" >
-              <div style={{border: '1px solid black', width: 250, padding: 5, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+              <div style={{borderRight: '2px solid black', width: 250, padding: 5, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                 <div style={{fontWeight: 'bold', paddingTop: 5, paddingBottom: 5}}>Search</div>
                 <InputGroup type="search" style={{width: '100%', margin: 5}} value={this.state.filter} placeholder="Search"
                        onChange={this.handleFilter}

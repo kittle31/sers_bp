@@ -4,9 +4,9 @@ import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
 import {Button, Intent} from "@blueprintjs/core"
 
-import SersNavbarMenu from './SersNavbarMenu'
-import PhoneEditor from './PhoneEditor'
-import AddressEditor from './AddressEditor'
+import SersNavbarMenu from '../components/SersNavbarMenu'
+import PhoneEditor from '../components/PhoneEditor'
+import AddressEditor from '../components/AddressEditor'
 import { getGlobalStore } from "../state/globalStore"
 import * as types from "../state/actionTypes"
 import {getResident, saveResident, newResident, saveNewResident} from "../state/residents/actions"
@@ -86,7 +86,7 @@ class ResidentEditor extends React.Component {
   render(){
     let sel = this.state.res || {}
     return(
-      <div style={{paddingTop: 40}}>
+      <div style={{paddingTop: 48}}>
         <SersNavbarMenu/>
         <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around', width: 200}}>
           <Button intent="primary"

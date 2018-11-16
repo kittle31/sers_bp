@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
 
-import SersNavbarMenu from './SersNavbarMenu'
+import SersNavbarMenu from '../components/SersNavbarMenu'
 import { getGlobalStore } from '../state/globalStore'
 import * as types from "../state/actionTypes"
 import {colors} from "../util/constants"
@@ -32,13 +32,13 @@ class HomePage extends React.Component {
           <p>menu button color</p>
           {makePicker(this, colors, 'buttonColor')}
         </div>
-      </div>        
-      )      
+      </div>
+      )
     }
     render() {
         return (
-          <div style={{paddingTop: 40}}>
-            <SersNavbarMenu bgColor={this.state.navBarColor} menuColor={this.state.navButtonColor}/>
+          <div style={{paddingTop: 48}}>
+            <SersNavbarMenu/>
             <p style={{paddingTop: 30}} className="">
               Welcome to Safe Family Ministries, {this.props.user.firstName} {this.props.user.lastName}
             </p>
