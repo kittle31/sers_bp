@@ -38,12 +38,13 @@ class ResidentEditor extends React.Component {
       }
     }
     if (this.props.match.url == '/residents/new'){
-    }
        this.props.newResident()
+    }
   }
 
   componentDidMount(){
     if (this.props.selected && this.props.selected.oop){
+
         this.props.getResident(this.props.selected.oop)
         AppToaster.clear()
     }
@@ -94,35 +95,36 @@ class ResidentEditor extends React.Component {
           <Button intent="warning"
                   onClick={this.gotoResidentPage}>Cancel</Button>
         </div>
-        <div style={{display: 'flex', flexDirection: 'row'}}>
-          <div style={{display: 'flex', flexDirection: 'column'}}>
-            {makeTextInput(this, sel, "firstName", "First Name", 250)}
-            {makeTextInput(this, sel, "referredBy", "Reffered By")}
-            <PhoneEditor self={this} state={sel} field={'homePhone'} label="Home Phone"/>
-            {makeTextInput(this, sel, "emContact", "Emergency Contact")}
-            {makeDateInput(this, sel, "birthdate", "DOB")}
-            {makeTextInput(this, sel, "allergy", "Allergy")}
-            {makeTextInput(this, sel, "ssn", "Ssn")}
-        </div>
-        <SpacerSide size={15}/>
-        <div style={{display: 'flex', flexDirection: 'column'}}>
-            {makeTextInput(this, sel, "lastName", "Last Name", 250)}
-            <PhoneEditor self={this} state={sel} field={'referredPhone'} label="Referred Phone"/>
-            <div style={{display: 'flex', flexDirection: 'row'}}>
-              {makeDateInput(this, sel,  "startDate", "Start Date")}
-              <div style={{display: 'flex', flexDirection: 'column'}}>
-                {makeDateInput(this, sel,  "exitDate", "Exit Date")}
+    	<div style={{display: 'flex', flexDirection: 'row'}}>
+    	  {makeTextInput(this, sel, "firstName", "First Name", 250,1)}
+    	  {makeTextInput(this, sel, "lastName", "Last Name", 250, 2)}
+    	</div>
+    	<div style={{display: 'flex', flexDirection: 'row'}}>
+    	  {makeTextInput(this, sel, "referredBy", "Reffered By", 250, 3)}
+    	  <PhoneEditor self={this} state={sel} field={'referredPhone'} label="Referred Phone" tabOrder={4}/>
+    	</div>
+    	<div style={{display: 'flex', flexDirection: 'row'}}>
+    	      {makeDateInput(this, sel, "birthdate", "DOB")}
+              {makeDateInput(this, sel,  "startDate", "Start Date", 250, 10)}
+              {makeDateInput(this, sel,  "exitDate", "Exit Date")}
+              <div style={{paddingTop: 27}}>
                 {makeCheckboxInput(this, sel,  "active", "Active")}
               </div>
-            </div>
-            <div style={{display: 'flex', flexDirection: 'row'}}>
+    	</div>
+    	<div style={{display: 'flex', flexDirection: 'row'}}>
+    		{makeTextInput(this, sel, "emContact", "Emergency Contact")}
+    		<PhoneEditor self={this} state={sel} field={'emPhone'} label="Emergency Phone"/>
+    	</div>
+    	<div style={{display: 'flex', flexDirection: 'row'}}>
               <PhoneEditor self={this} state={sel} field={'cellPhone'} label="Cell Phone"/>
               <PhoneEditor self={this} state={sel} field={'messagePhone'} label="Message Phone"/>
-            </div>
-            <PhoneEditor self={this} state={sel} field={'emPhone'} label="Emergency Phone"/>
-            </div>
-        </div>
-        <AddressEditor self={this} state={sel} field={'address'}/>
+    	</div>
+    	<div style={{display: 'flex', flexDirection: 'row'}}>
+    	  {makeTextInput(this, sel, "allergy", "Allergy")}
+    	  {makeTextInput(this, sel, "ssn", "Ssn")}
+    	</div>
+    	<AddressEditor self={this} state={sel} field={'address'}/>
+    	<div>id {sel.oop}</div>
       </div>
     )
   }

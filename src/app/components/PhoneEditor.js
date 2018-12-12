@@ -41,7 +41,8 @@ export default class PhoneEditor extends React.Component{
   }
 
   render(){
-    const {label} = this.props
+    const {label, tabOrder} = this.props
+
     return (
       <div style={{padding: 5, display: 'flex', flexDirection: 'column'}}>
         <label style={{paddingLeft: 5}}>{label}</label>

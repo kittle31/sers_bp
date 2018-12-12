@@ -90,9 +90,10 @@ class ResidentPage extends React.Component {
     }
 
     getPhoneField(value, title){
-      if (!value || !value.areaCode)
-        return this.getField("", title)
-      const phone = "("+value.areaCode+")-"+value.prefix+"-"+value.suffix
+      if (!value || !value.areaCode || !value.prefix || !value.suffix)
+        return this.getField("n/a", title)
+
+      const phone = "("+value.areaCode +")-"+value.prefix+"-"+value.suffix
       return this.getField( phone , title)
     }
 

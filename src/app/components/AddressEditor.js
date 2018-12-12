@@ -27,8 +27,7 @@ export default class AddressEditor extends React.Component {
 
   handleValueChanged(field, event){
     this.setState({ [field] : event.target.value })
-    this.state[field] = event.target.value
-    this.props.self.setState({ [this.props.field] : this.state})
+    this.props.state[this.props.field][field] = event.target.value
   }
 
   render(){

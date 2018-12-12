@@ -13,13 +13,17 @@ function momentFromGs(date){
 function getMomentFormatter() {
   const format = "MMM D, YYYY"
   return {
-      formatDate: (date, locale) => moment(date).format(format),
-      parseDate: (str, locale) => moment(str, format).toDate()
+      formatDate: (date, locale) => {
+        return moment(date).format(format)
+      },
+      parseDate: (str, locale) => {
+        return moment(str, format).toDate()
+      }
   }
 }
 
 
-export const makeTextInput = (self, state, field, label, width) =>{
+export const makeTextInput = (self, state, field, label, width, tabIndex) =>{
   return (
     <div style={{padding: 5, display: 'flex', flexDirection: 'column', width: width}}>
       <label style={{paddingLeft: 5}}>{label}</label>
@@ -30,11 +34,11 @@ export const makeTextInput = (self, state, field, label, width) =>{
   )
 }
 
-export const makeDateInput = (self, state, field, label) => {
+export const makeDateInput = (self, state, field, label, width, tabIndex) => {
   let dateValue = state[field]
   let date
-  if (dateValue && dateValue.dayOfYear)
-    date = momentFromGs(dateValue)
+  if (dateValue && dateValue.indexOf && dateValue.indexOf("-") > 0)
+    date = moment(dateValue, 'MM-DD-YYYY').toDate()
   else
     date = dateValue
 
@@ -43,7 +47,7 @@ export const makeDateInput = (self, state, field, label) => {
       <label style={{paddingLeft: 5}}>{label}</label>
       <DateInput value={date } placeholder={label}
                large={true}
-               minDate={new Date(0)}
+               minDate={new Date(1950)}
                onChange={self.handleDateChanged.bind(self, field)}
       {...getMomentFormatter()} />
     </div>
