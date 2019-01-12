@@ -22,6 +22,14 @@ function getMomentFormatter() {
   }
 }
 
+function handleDateChanged(self, field, date){
+  const evt = {
+    target: {
+      value : date
+    }
+  }
+  self.handleValueChanged(field, evt)
+}
 
 export const makeTextInput = (self, state, field, label, width, tabIndex) =>{
   return (
@@ -48,7 +56,7 @@ export const makeDateInput = (self, state, field, label, width, tabIndex) => {
       <DateInput value={date } placeholder={label}
                large={true}
                minDate={new Date(1950)}
-               onChange={self.handleDateChanged.bind(self, field)}
+               onChange={handleDateChanged.bind(self, self, field)}
       {...getMomentFormatter()} />
     </div>
   )

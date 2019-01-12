@@ -10,3 +10,8 @@ export const loadHappenings = (batch) => {
     };
   }
 
+export const saveHappening = (note)  => {
+  return async(dispatch) => {
+    const rresponse = await axios.post(url, {oper: 'save', data: note})
+  }
+}

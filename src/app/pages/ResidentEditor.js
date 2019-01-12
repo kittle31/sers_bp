@@ -12,7 +12,6 @@ import * as types from "../state/actionTypes"
 import {getResident, saveResident, newResident, saveNewResident} from "../state/residents/actions"
 import {makeTextInput, makeDateInput, makeCheckboxInput} from "../util/UIUtil"
 import {AppToaster} from "../util/toaster"
-import { SpacerSide } from "../util/spacer";
 
 class ResidentEditor extends React.Component {
     constructor(){
@@ -56,16 +55,26 @@ class ResidentEditor extends React.Component {
   }
 
   handleValueChanged(field, event){
-    this.setState({res: {
-      ...this.state.res,
-      [field] : event.target.value
-    }})
-  }
+    const value = event.target.value
+    if (field == 'active' && !res.exitDate){
+        let exitDate
+        if (!value){
+            exitDate = new Date()
+        }
+        else{
+          exitDate = null
+        }
+        this.setState( {res : {
+          ...this.state.res,
+          active: value,
+          exitDate: exitDate
+        }})
+        return
+    }
 
-  handleDateChanged(field, date){
     this.setState({res: {
       ...this.state.res,
-      [field] : date
+      [field] : value
     }})
   }
 
@@ -104,20 +113,20 @@ class ResidentEditor extends React.Component {
     	  <PhoneEditor self={this} state={sel} field={'referredPhone'} label="Referred Phone" tabOrder={4}/>
     	</div>
     	<div style={{display: 'flex', flexDirection: 'row'}}>
-    	      {makeDateInput(this, sel, "birthdate", "DOB")}
-              {makeDateInput(this, sel,  "startDate", "Start Date", 250, 10)}
-              {makeDateInput(this, sel,  "exitDate", "Exit Date")}
-              <div style={{paddingTop: 27}}>
-                {makeCheckboxInput(this, sel,  "active", "Active")}
-              </div>
+        {makeDateInput(this, sel, "birthdate", "DOB")}
+        {makeDateInput(this, sel,  "startDate", "Start Date", 250, 10)}
+        {makeDateInput(this, sel,  "exitDate", "Exit Date")}
+        <div style={{paddingTop: 27}}>
+          {makeCheckboxInput(this, sel,  "active", "Active")}
+        </div>
     	</div>
     	<div style={{display: 'flex', flexDirection: 'row'}}>
     		{makeTextInput(this, sel, "emContact", "Emergency Contact")}
     		<PhoneEditor self={this} state={sel} field={'emPhone'} label="Emergency Phone"/>
     	</div>
     	<div style={{display: 'flex', flexDirection: 'row'}}>
-              <PhoneEditor self={this} state={sel} field={'cellPhone'} label="Cell Phone"/>
-              <PhoneEditor self={this} state={sel} field={'messagePhone'} label="Message Phone"/>
+        <PhoneEditor self={this} state={sel} field={'cellPhone'} label="Cell Phone"/>
+        <PhoneEditor self={this} state={sel} field={'messagePhone'} label="Message Phone"/>
     	</div>
     	<div style={{display: 'flex', flexDirection: 'row'}}>
     	  {makeTextInput(this, sel, "allergy", "Allergy")}
