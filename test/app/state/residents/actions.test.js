@@ -4,17 +4,19 @@ import thunk from 'redux-thunk'
 import axios from 'axios'
 import * as types from '../../../../src/app/state/actionTypes'
 import * as actions from "../../../../src/app/state/residents/actions"
+import { checkActionFn } from '../../../testUtils'
 
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
 
 describe('resident actions', ()=>{
-  let store
+  let store, checkAction
   beforeEach( ()=> {
     jest.resetAllMocks()
     store = mockStore({
       residents: {}
     })
+    checkAction = checkActionFn.bind( "ignored", actions, store)
   })
 
     it('loads residents', () =>{
@@ -23,11 +25,9 @@ describe('resident actions', ()=>{
         {type: types.RESIDENTS_LOADED, payload: []},
         {type: types.RESIDENTS_LOADED, payload: 'resident data'}
       ]
-      return store.dispatch(actions.loadResidents()).then(
-        () => {
-          expect(store.getActions()).toEqual(expectedActions)
-          expect(axios.post).toHaveBeenCalledWith('/sers-api/resident', {oper: 'list'})
-        }
+      return checkAction("loadResidents", [],
+        expectedActions,
+        '/sers-api/resident', {oper: 'list'}
       )
     })
 
@@ -36,22 +36,17 @@ describe('resident actions', ()=>{
       const expectedActions = [
         {type: types.RESIDENT_LOADED, payload: 'resident data'}
       ]
-      return store.dispatch(actions.getResident(1234)).then(
-        () => {
-          expect(store.getActions()).toEqual(expectedActions)
-          expect(axios.post).toHaveBeenCalledWith('/sers-api/resident', {oper: 'get', oop: 1234})
-        }
+      return checkAction("getResident", [1234],
+        expectedActions,
+        '/sers-api/resident', {oper: 'get', oop: 1234}
       )
     })
 
     it('saves an existing resident', () =>{
       jest.spyOn(axios, 'post').mockReturnValue( {data: { resp: 'resident data'}})
-      const expectedActions = [ ]
-      return store.dispatch(actions.saveResident('resident obj')).then(
-        () => {
-          expect(store.getActions()).toEqual(expectedActions)
-          expect(axios.post).toHaveBeenCalledWith('/sers-api/resident', {oper: 'save', resident: 'resident obj'})
-        }
+      return checkAction("saveResident", ["resident obj"],
+        [],
+        '/sers-api/resident', {oper: 'save', resident: 'resident obj'}
       )
     })
 
@@ -59,23 +54,18 @@ describe('resident actions', ()=>{
       jest.spyOn(axios, 'post').mockReturnValue( {data: { resp: 'resident data'}})
       const expectedActions = [
         {type: types.RESIDENT_LOADED, payload: 'resident data'}
-    ]
-      return store.dispatch(actions.newResident('resident obj')).then(
-        () => {
-          expect(store.getActions()).toEqual(expectedActions)
-          expect(axios.post).toHaveBeenCalledWith('/sers-api/resident', {oper: 'new'})
-        }
-      )
+      ]
+      return checkAction("newResident", ["resident obj"],
+        expectedActions,
+        '/sers-api/resident', {oper: 'new'}
+        )
     })
 
     it('saves a new resident', () =>{
       jest.spyOn(axios, 'post').mockReturnValue( {data: { resp: 'resident data'}})
-      const expectedActions = [ ]
-      return store.dispatch(actions.saveNewResident('resident obj')).then(
-        () => {
-          expect(store.getActions()).toEqual(expectedActions)
-          expect(axios.post).toHaveBeenCalledWith('/sers-api/resident', {oper: 'saveNew', resident: 'resident obj'})
-        }
-      )
+      return checkAction("saveNewResident", ["resident obj"],
+        [],
+        '/sers-api/resident', {oper: 'saveNew', resident: 'resident obj'}
+        )
     })
 })
